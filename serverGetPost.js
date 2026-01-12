@@ -36,6 +36,7 @@ accessGetPost.get(`/`, (req, res) => {
 accessGetPost.get(`/lessons`, async (req, res) => {
     try {// Try catch for any errors when trying to fetch the lessons
         const lessons = await productsCollection.find({}).toArray();// Find all the lessons from the collection
+        console.log(lessons);
         res.json(lessons);// Send the lessons as a json format
     } catch (error) {
         res.status(500).json({ success: false, message: `Error getting the lessons with internal server: ${error}` });
