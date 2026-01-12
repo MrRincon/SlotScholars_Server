@@ -11,6 +11,7 @@ const cors = require('cors');
 // MongoDB connection
 // Router to handle GET and POST requests
 const { connectDB } = require('./mongoServer.js');
+const accessGetPost = require('./serverGetPost.js');
 
 // Port where the server will listen
 // Create an instance of the Express application
@@ -34,8 +35,6 @@ app.use(express.static(imagePath));
         await connectDB();
         console.log('Database connected successfully');
 
-        const accessGetPost = require('./serverGetPost.js');
-        
         // Middleware to parse JSON request bodies
         app.use(accessGetPost);
 

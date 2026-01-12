@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 // Import collections from mongoDB server
 const { getCollections } = require('./mongoServer.js');
 
-const { productsCollection, ordersCollection } = getCollections();
-
 const accessGetPost = express();
 accessGetPost.use(bodyParser.json());
 accessGetPost.set('json spaces', 3);
@@ -38,6 +36,7 @@ accessGetPost.get(`/`, (req, res) => {
 // GET for all the lessons
 accessGetPost.get(`/lessons`, async (req, res) => {
     try {// Try catch for any errors when trying to fetch the lessons
+        const { productsCollection } = getCollections();
         const lessons = await productsCollection.find({}).toArray();// Find all the lessons from the collection
         console.log(lessons);
         res.json(lessons);// Send the lessons as a json format
@@ -49,6 +48,7 @@ accessGetPost.get(`/lessons`, async (req, res) => {
 // GET for all the orders
 accessGetPost.get(`/orders`, async (req, res) => {
     try {// Try catch for any errors when trying to fetch the orders
+        const { ordersCollection } = getCollections();
         const orders = await ordersCollection.find({}).toArray();// Find all the orders from the collection
         res.json(orders);// Send the orders as a json format
         // await client.close();
@@ -60,6 +60,7 @@ accessGetPost.get(`/orders`, async (req, res) => {
 // POST for searched lessons
 accessGetPost.post(`/search`, async (req, res) => {
     try {
+        const { productsCollection } = getCollections();
         const searchQ = req.body;
         // If method to return an empty array if the search space is empty 
         if (!searchQ.searchTerm || searchQ.searchTerm.trim() === '') {
@@ -86,6 +87,7 @@ accessGetPost.post(`/search`, async (req, res) => {
 //POST for new orders
 accessGetPost.post(`/placeOrder`, async (req, res) => {
     try {// Try catch for any errors of the req.body
+        const { ordersCollection } = getCollections();
         const data = req.body;
         data.id = await generateUniqueID();// Assigned the id to the order data in the body of the request, once generated and confirmed
         await ordersCollection.insertOne(data);// Insert the order data in the orders collection
@@ -98,6 +100,7 @@ accessGetPost.post(`/placeOrder`, async (req, res) => {
 //PUT for updating the lessons
 accessGetPost.put(`/updateLessons`, async (req, res) => {
     try {// Try catch for any errors of the req.body
+        const { productsCollection } = getCollections();
         const data = req.body;
         console.log(data.purchasedLessonsID);
         for (let lessonID of data.purchasedLessonsID) {// Looping through all the elements in the data inside the request
