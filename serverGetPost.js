@@ -29,13 +29,14 @@ async function generateUniqueID() {
 
 // GET to welcome to the server
 accessGetPost.get(`/`, (req, res) => {
-    res.send("Welcome to SchoolFlex")
+    res.send("Welcome to SlotScholars")
 })
 
 // GET for all the lessons
 accessGetPost.get(`/lessons`, async (req, res) => {
     try {// Try catch for any errors when trying to fetch the lessons
         const lessons = await productsCollection.find({}).toArray();// Find all the lessons from the collection
+        console.log(lessons);
         res.json(lessons);// Send the lessons as a json format
     } catch (error) {
         res.status(500).json({ success: false, message: `Error getting the lessons with internal server: ${error}` });
