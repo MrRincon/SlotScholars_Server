@@ -6,18 +6,20 @@ const properties = propertiesReader(propertiesPath);
 const {MongoClient, ServerApiVersion} = require('mongodb');
 
 // Create connection URI with encoded root and password
-let dbPprefix = properties.get('db.prefix');
-let dbUsername = encodeURIComponent(properties.get('db.user'));
-let dbPwd = encodeURIComponent(properties.get('db.pwd'));
-let dbName = properties.get('db.dbName');
-let dbUrl = properties.get('db.dbUrl');
-let dbParams = properties.get('db.params');
-const uri = dbPprefix + dbUsername + ':' + dbPwd + dbUrl + dbParams;
+const uri = process.env.MONGO_URI;
+const db = process.env.DB_NAME;
+
+if (!uri) {
+  throw new Error("MONGO_URI not defined");
+}
+if (!db) {
+  throw new Error("DB_NAME not defined");
+}
 
 // Set up client
-const client = new MongoClient(uri, {serverApi: ServerApiVersion.v1});
-// The database that will be used within mongoDB
-const db = client.db(dbName);
+const client = new MongoClient(uri, {
+    serverApi: ServerApiVersion.v1
+});
 
 // Function to test the connection with the database
 async function testConnection() {
