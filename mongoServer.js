@@ -1,8 +1,4 @@
-// Import classes from mongoDB
-const path = require('path');
-const propertiesReader = require('properties-reader'); 
-const propertiesPath = path.resolve(__dirname, './conf/db.properties');
-const properties = propertiesReader(propertiesPath);
+// Importing the MongoDB client
 const {MongoClient, ServerApiVersion} = require('mongodb');
 
 // Create connection URI with encoded root and password
