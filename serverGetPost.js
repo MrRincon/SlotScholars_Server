@@ -2,7 +2,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 // Import collections from mongoDB server
-const { productsCollection, ordersCollection } = require('./mongoServer.js');
+const { getCollections } = require('./mongoServer.js');
+
+const { productsCollection, ordersCollection } = getCollections();
+
 const accessGetPost = express();
 accessGetPost.use(bodyParser.json());
 accessGetPost.set('json spaces', 3);
