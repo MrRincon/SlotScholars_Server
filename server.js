@@ -8,9 +8,8 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 
-// Router to handle GET and POST requests
 // MongoDB connection
-const accessGetPost = require('./serverGetPost.js');
+// Router to handle GET and POST requests
 const { connectDB } = require('./mongoServer.js');
 
 // Port where the server will listen
@@ -35,6 +34,8 @@ app.use(express.static(imagePath));
         await connectDB();
         console.log('Database connected successfully');
 
+        const accessGetPost = require('./serverGetPost.js');
+        
         // Middleware to parse JSON request bodies
         app.use(accessGetPost);
 
@@ -51,4 +52,4 @@ app.use(express.static(imagePath));
         console.error('Database connection failed', error);
         process.exit(1);
     }
-});
+})();
