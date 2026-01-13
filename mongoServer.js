@@ -14,7 +14,12 @@ if (!dbName) {
 
 // Set up client
 const client = new MongoClient(uri, {
-    serverApi: ServerApiVersion.v1
+    serverApi: ServerApiVersion.v1,
+    tls: true,
+    tlsAllowInvalidCertificates: false,
+    tlsAllowInvalidHostnames: false,
+    minPoolSize: 10,
+    maxPoolSize: 100
 });
 
 let db;
