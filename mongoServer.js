@@ -1,5 +1,5 @@
 // Importing the MongoDB client
-const {MongoClient, ServerApiVersion} = require('mongodb');
+const {MongoClient, ServerApiVersion } = require('mongodb');
 
 // Create connection URI with encoded root and password
 const uri = process.env.MONGO_URI;
@@ -26,7 +26,10 @@ let db;
 
 // Function to test the connection with the database
 async function connectDB() {
-    if (db) return db;
+    if (db) {
+        console.log('Already connected to MongoDB.');
+        return db;
+    }
 
     try {
         await client.connect();
